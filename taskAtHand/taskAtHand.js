@@ -1,7 +1,8 @@
 "use strict";
 
 function TaskAtHandApp(){
-	var version = "v1.3", appStorage = new AppStorage("taskAtHand");
+	var version = "v1.3",
+		appStorage = new AppStorage("taskAtHand");
 
 	function setStatus(message){
 		$("#app>footer").text(message);
@@ -19,6 +20,7 @@ function TaskAtHandApp(){
 		.focus();
 
 		$("#app header").append(version);
+		loadTaskList();
 		setStatus("ready");
 	};
 
@@ -31,6 +33,7 @@ function TaskAtHandApp(){
 			$("#new-task-name").val("").focus();
 		}
 	}
+	
 	function addTaskElement(taskName){ //this method will create a new <li> 
 		var $task = $("<li></li>");
 		var $delete = $("<button class='delete'>X</button>");
@@ -86,6 +89,8 @@ function TaskAtHandApp(){
 			$(this).hide().siblings("span.task-name").show();
 		});
 
+		$task.click(function() { onSelectTask($task); });
+
 	}
 
 	function onEditTaskName($span){
@@ -128,9 +133,29 @@ function TaskAtHandApp(){
 		saveTaskList();
 	}
 
+	function loadTaskList(){
+		var tasks = appStorage.getValue("taskList");
+		if (tasks){
+			for (var i in tasks){
+				addTaskElement(tasks[i]);
+			}
+		}
+	}
+
+	function onSelectTask($task){
+		if ($task) {
+			// Unselect other tasks
+			$task.siblings(".selected").removeClass("selected");
+			// Selecet this task
+			$task.addClass("selected");
+		}
+	}
+
 }
 
 $(function() {
 	window.app = new TaskAtHandApp();
 	window.app.start();
 });
+
+// 58
