@@ -3,13 +3,32 @@
 <head>
 	<title>Task@Hand</title>
 	<link rel="stylesheet" href="taskAtHand.css">
+	<link id="theme-style" rel="stylesheet" href="themes/blue.css">
 	<script src="lib/jquery-2.2.3.min.js"></script>
 	<script src="taskAtHand.js"></script>
 	<script src="AppStorage.js"></script>
+	<script src="taskList.js"></script>
 </head>
 <body>
+
 	<div id="app">
 		<header>Task@Hand</header>
+		<div id="toolbar">
+			<label for="theme">Theme</label>
+			<select title="Select theme" id="theme">
+				<option value="blue">Blue</option>
+				<option value="green">Green</option>
+				<option value="magenta">Magenta</option>
+				<option value="red">Red</option>
+			</select>
+		</div>
+
+<!-- 		<div id="main">
+			<canvas width="600" height="400">
+				Sorry, your browser doesn's support canvas
+			</canvas>
+		</div> -->
+		
 		<div id="main">
 			<div id="add-task">
 				<label for="new-task-name">Add a task</label>
@@ -26,15 +45,41 @@
 	<div id="templates" class="hidden">
 		<ul id="task-template">
 			<li class="task">
+				<button class="toggle-details">+</button>
+				<span class="task-name"></span>
+				<input type="text" class="task-name hidden"/>
 				<div class="tools">
 					<button class="delete" title="Delete">x</button>
 					<button class="move-up" title="Up">^</button>
 					<button class="move-down" title="Down">v</button>
 				</div>
-				<span class="task-name"></span>
-				<input type="text" class="task-name hidden"/>
+				<div class="details">
+					<label>Start date:</label>
+					<input type="date" data-field="startDate"/><br/>
+
+					<label>Due date:</label>
+					<input type="date" data-field="dueDate"/><br/>
+
+					<label>Status:</label>
+					<select data-field="status">
+						<!-- <option value="0">None</option>
+						<option value="1">Not Started</option>
+						<option value="2">Started</option>
+						<option value="3">Completed</option> -->
+					</select><br/>
+					<label>Priority:</label>
+					<select data-field="priority">
+						<!-- <option value="0">None</option>
+						<option value="1">Low</option>
+						<option value="2">Normal</option>
+						<option value="3">High</option> -->
+					</select><br/>
+					<label>%&nbsp;Complete:</label>
+					<input type="number" data-field="pctComplete" min="0" max="100" step="10" value="0" "/>
+				</div>
 			</li>
 		</ul>
 	</div>
+
 </body>
 </html>
